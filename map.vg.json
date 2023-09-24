@@ -38,18 +38,18 @@
         "fields": ["AvgMonthlyNetSalary"]
       }
     },
-    {"calculate": "datum.AvgMonthlyNetSalary", "as": "AvgMonthlyNetSalary"}
+    {"calculate": "datum.AvgMonthlyNetSalary", "as": "Average Monthly Net Salary"}
   ],
   "mark": {"type": "geoshape"},
   "encoding": {
     "color": {
-      "field": "AvgMonthlyNetSalary",
+      "field": "Average Monthly Net Salary",
       "type": "quantitative",
       "scale": {"type": "log"}
     },
     "tooltip": [
       {"field": "properties.NAME", "type": "nominal", "title": "Country"},
-      {"field": "AvgMonthlyNetSalary", "type": "quantitative"}
+      {"field": "Average Monthly Net Salary", "type": "quantitative"}
     ]
   }
 }
