@@ -1,0 +1,23 @@
+{
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "data": {
+      "url": "https://raw.githubusercontent.com/Dax246/DataVis/main/data/country_cost_of_living.csv"
+    },
+    "mark": "bar",
+    "encoding": {
+        "x": {
+            "field": "country",
+            "type": "nominal",
+            "title": null
+        },
+        "y": {
+          "field": "McMeal",
+          "type": "quantitative",
+          "title": "Cost"
+        },
+        "tooltip": [
+          {"field": "country", "type": "nominal"},
+          {"field": "McMeal", "title": "Price of McMeal", "type": "quantitative", "format": ".2f"}
+        ]
+      }
+  } 
