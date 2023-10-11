@@ -3,18 +3,23 @@ body *{
 }
 
 h1 {
-    padding-top: 10px;
-    padding-left: 10px;
     font-weight: 900;
 }
 
 body {
-    background-color: white;
+    background-color: rgb(252, 252, 250);
+
+}
+
+.pure-u-1-1 {
+    height: 100px;
+    width: auto;
+    text-align: center;
+    padding-bottom: 30px;
 }
 
 .page {
-    width: 850px;
-    background-color: white;
+    width: 1500px;
     margin: auto;
     padding: 50px;
     padding-top: 35px;
@@ -22,7 +27,16 @@ body {
 
 .vis-container {
     width: 100%;
+    height: 100%;
 }
+
+.main_style {
+    background-color: white; /* Set background to light grey */
+    border-radius: 15px;         /* Rounded corners */
+    padding: 50px;               /* Padding inside the div */
+    box-shadow: 3px 6px 8px 4px rgba(0, 0, 0, 0.1);
+}
+
 
 .description h2,
 h1 {

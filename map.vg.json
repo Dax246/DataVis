@@ -1,14 +1,47 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "title": "Average Monthly Net Salary",
-  "width": 900,
-  "height": 400,
   "projection": {"type": "equalEarth"},
+  "width": "container",
+  "height": 500,
   "data": {
     "url": "Global_map.topojson",
     "format": {"type": "topojson", "feature": "ne_110m_admin_0_countries"}
-  },
+  }, 
+  "params": [
+    {
+      "name": "selectedProduct",
+      "bind": {
+        "input": "select",
+        "options": ["Milk", "Bread", "Eggs", "McMeal", "Taxi1km", "Cinema", "Apt1BedroomCityCtr", "AvgMonthlyNetSalary"],
+        "name": "Select Product "
+      },
+      "value": "Milk"
+    }
+  ],
+  "transform": [
+    {
+      "fold": ["Milk", "Bread", "Eggs", "McMeal", "Taxi1km", "Cinema", "Apt1BedroomCityCtr", "AvgMonthlyNetSalary"],
+      "as": ["Product", "Value"]
+    },
+    {
+      "filter": "datum.Product == selectedProduct"
+    }
+  ],
   "layer":[
+    {
+      "data": {
+        "url": "Global_map_with_boundary_box.topojson",
+        "format": {"type": "topojson", "feature": "ne_110m_wgs84_bounding_box"}
+      },
+      "mark": {"type": "geoshape", "fill": "lightsteelblue", "stroke": "blue"}
+    },
+    {
+      "data": {
+        "url": "Global_map_with_boundary_box.topojson",
+        "format": {"type": "topojson", "feature": "ne_110m_graticules_30"}
+      },
+      "mark": {"type": "geoshape", "fill": null, "stroke": "lightgray"}
+    },
     {
       "transform": [
         {
@@ -19,37 +52,34 @@
       "mark": {"type": "geoshape", "fill": "lightgray", "stroke": "white"},
       "encoding": {"tooltip": {"field": "note"}}
     },
-    {
-      "data": {
-        "url": "Global_map.topojson",
-        "format": {"type": "topojson", "feature": "ne_110m_graticules_30"}
-      },
-      "mark": {"type": "geoshape", "fill": null, "stroke": "lightgray"}
-    },
   {
   "transform": [
     {
       "lookup": "properties.NAME",
       "from": {
         "data": {
-          "url": "averaged_data.csv"
+          "url": "https://raw.githubusercontent.com/Dax246/DataVis/main/cost_of_living_final.csv"
         },
-        "key": "country",
-        "fields": ["AvgMonthlyNetSalary"]
+        "key": "Country",
+        "fields": ["Milk", "Bread", "Eggs", "McMeal", "Taxi1km", "Cinema", "Apt1BedroomCityCtr", "AvgMonthlyNetSalary"]
       }
     },
-    {"calculate": "datum.AvgMonthlyNetSalary", "as": "Average Monthly Net Salary"}
-  ],
+    {
+      "calculate": "datum[selectedProduct]",
+      "as": "chosenProductValue"
+    }
+    ],
   "mark": {"type": "geoshape"},
   "encoding": {
     "color": {
-      "field": "Average Monthly Net Salary",
+      "field": "chosenProductValue",
       "type": "quantitative",
-      "scale": {"type": "log"}
+      "scale": {"type": "linear"},
+      "title": "Value of Selected Product"
     },
     "tooltip": [
       {"field": "properties.NAME", "type": "nominal", "title": "Country"},
-      {"field": "Average Monthly Net Salary", "type": "quantitative"}
+      {"field": "chosenProductValue", "type": "quantitative", "title": "Value", "format": ".2f"}
     ]
   }
 }
