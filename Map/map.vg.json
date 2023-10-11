@@ -1,8 +1,8 @@
 {
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "title": "Average Monthly Net Salary",
-  "width": 900,
-  "height": 400,
+  "width": 800,
+  "height": 300,
   "projection": {"type": "equalEarth"},
   "data": {
     "url": "Global_map.topojson",

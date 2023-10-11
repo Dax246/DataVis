@@ -1,87 +1,81 @@
 {
-  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-  "data": {
-    "url": "https://raw.githubusercontent.com/Dax246/DataVis/main/cost_of_living_final.csv"
-  },
-  "width": "container",
-  "height": 400,
-  "params": [
-    {
-      "name": "Continent_selection",
-      "bind": {
-        "input": "select",
-        "options": [
-          null,
-          "North America",
-          "South America",
-          "Europe",
-          "Africa",
-          "Asia",
-          "Oceania"
-        ],
-        "labels": [
-          "Show All",
-          "North America",
-          "South America",
-          "Europe",
-          "Africa",
-          "Asia",
-          "Oceania"
-        ],
-        "name": "Continent Selection "
-      }
-    }
-  ],
-  "transform": [
-    {"filter": "datum.McMeal > 0"},
-    {"filter": "Continent_selection == null || datum.Continent == Continent_selection"}
-  ],
-  "layer": [
-    {
-      "mark": "bar",
-      "encoding": {
-      "x": {
-          "field": "Country",
-          "type": "nominal",
-          "title": null
-      },
-      "y": {
-        "field": "McMeal",
-        "type": "quantitative",
-        "title": "Cost"
-      },
-      "color": {
-        "condition": {
-          "test": "datum.Country === 'Australia'",
-          "value": "Green"
-        },
-        "value": "steelblue"
-      },
-      "tooltip": [
-        {"field": "Country", "type": "nominal"},
-        {"field": "McMeal", "title": "Price of McMeal", "type": "quantitative", "format": ".2f"}
-      ]
-      }
+    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+    "title": "Cost of McMeals across the World",
+    "height": 300,
+    "width": 1800,
+    "data": {
+      "url": "https://raw.githubusercontent.com/Dax246/DataVis/main/cost_of_living_final.csv"
     },
-    {
-      "mark": {
-        "type": "text",
-        "align": "center",
-        "baseline": "middle",
-        "dx": 5,
-        "fontSize": 20
-      },
-      "transform": [
-        {"aggregate": [{"op": "mean", "field": "McMeal", "as": "mean_McMeal"}]},
-        {"calculate": "'Average: $' + datum.mean_McMeal", "as": "mean_annotation"}
-      ],
-      "encoding": {
-        "text": {"field": "mean_annotation"},
-        "y": {
-          "value": -20  
+    "params": [
+      {
+        "name": "Continent_selection",
+        "bind": {
+          "input": "select",
+          "options": [
+            null,
+            "North America",
+            "South America",
+            "Europe",
+            "Africa",
+            "Asia",
+            "Oceania"
+          ],
+          "labels": [
+            "Show All",
+            "North America",
+            "South America",
+            "Europe",
+            "Africa",
+            "Asia",
+            "Oceania"
+          ],
+          "name": "Continent Selection "
         }
       }
-    }
-  ]
-  
-} 
+    ],
+    "transform": [
+      {"filter": "datum.McMeal > 0"},
+      {"filter": "Continent_selection == null || datum.Continent == Continent_selection"}
+    ],
+    "layer": [
+      {
+        "mark": "bar",
+        "encoding": {
+        "x": {
+            "field": "Country",
+            "type": "nominal",
+            "title": null
+        },
+        "y": {
+          "field": "McMeal",
+          "type": "quantitative",
+          "title": "Cost"
+        },
+        "tooltip": [
+          {"field": "Country", "type": "nominal"},
+          {"field": "McMeal", "title": "Price of McMeal", "type": "quantitative", "format": ".2f"}
+        ]
+        }
+      },
+      {
+        "mark": {
+          "type": "text",
+          "align": "center",
+          "baseline": "middle",
+          "dx": 5,
+          "fontSize": 12
+        },
+        "transform": [
+          {"aggregate": [{"op": "mean", "field": "McMeal", "as": "mean_McMeal"}]},
+          {"calculate": "'Average: $' + datum.mean_McMeal", "as": "mean_annotation"}
+        ],
+        "encoding": {
+          "text": {"field": "mean_annotation"},
+          "y": {
+            "value": -20  
+          }
+        }
+      }
+    ]
+    
+  } 
