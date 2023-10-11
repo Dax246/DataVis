@@ -50,13 +50,6 @@
         "type": "quantitative",
         "title": "Cost"
       },
-      "color": {
-        "condition": {
-          "test": "datum.Country === 'Australia'",
-          "value": "Green"
-        },
-        "value": "steelblue"
-      },
       "tooltip": [
         {"field": "Country", "type": "nominal"},
         {"field": "McMeal", "title": "Price of McMeal", "type": "quantitative", "format": ".2f"}

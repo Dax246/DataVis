@@ -1,0 +1,54 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "width": "container",
+  "height": 400,
+  "title": "Prices",
+  "data": {
+    "url": "https://raw.githubusercontent.com/Dax246/DataVis/main/cost_of_living_final.csv"
+  },
+  "transform":[
+    {"filter": "datum.Apt1BedroomNoCityCtr > 0 && datum.Apt1BedroomNoCityCtr < 2000"},
+    {"filter": "datum.Bread > 0"}
+  ],
+  "params": [
+      {
+          "name": "continent_highlight",
+          "select": {"type": "point", "fields": ["Continent"]},
+          "bind": "legend"
+      }
+  ],
+  "layer": [
+    {
+    "mark": "point",
+    "encoding": {
+      "x": {
+        "field": "Apt1BedroomNoCityCtr",
+        "type": "quantitative",
+        "title":"Weekly Rent of 1 Bedroom Apartment",
+        "axis": {"tickCount": 7},
+        "scale": {"type": "linear", "domainMax": 2000}
+      },
+      "y": {
+        "field": "Bread",
+        "type": "quantitative",
+        "axis": { "tickCount": 6},
+        "scale": {"type": "linear"}
+      },
+      "opacity": {
+        "condition": {"param": "continent_highlight", "value": 0.9},
+        "value": 0.25
+      },
+      "color": {"field": "Continent", "type": "nominal","scale": {"domain":["North America", "South America", "Europe", "Africa", "Asia", "Oceania"],"range": ["#e41a1c", "#984ea3", "#ff7f00", "#a6cee3", "#377eb8", "#2bb81c"]}
+      },
+      "fill":{"field": "Continent", "type": "nominal","scale": {"domain":["North America", "South America", "Europe", "Africa", "Asia", "Oceania"],"range": ["#e41a1c", "#984ea3", "#ff7f00", "#a6cee3", "#377eb8", "#2bb81c"]}
+        },
+        "size": {"value": 40},
+      "tooltip": [
+        {"field": "Country", "type": "nominal"},
+        {"field": "Apt1BedroomNoCityCtr", "type": "quantitative", "title": "Weekly Rent of 1 Bedroom Apartment", "format": ".2f"},
+        {"field": "Bread", "type": "quantitative", "format": ".2f"}
+      ]
+    }
+  }
+]
+}
