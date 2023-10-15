@@ -48,6 +48,10 @@
         "field": "Product",
         "type": "nominal",
         "title": "Product",
+        "scale": {
+          "domain": ["Taxi Trip", "Wine for 2", "Meal for 2", "Cinema for 2", "Jeans"],
+          "range": ["#0066CC", "#009988", "#00CC33", "#99CC00", "#FFCC00"]
+        },
         "legend": {
           "orient": "top-left"
         }

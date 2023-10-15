@@ -1,6 +1,4 @@
-body *{
-    font-family: 'Arial';
-}
+
 
 h1 {
     font-family: 'Raleway', sans-serif;
@@ -46,7 +44,7 @@ body {
 }
 
 .heading_style {
-    background-color: rgba(17, 70, 214, 0.329); 
+    background-color: rgba(55, 96, 207, 0.582); 
     border-radius: 15px;         
     padding: 50px;               
     box-shadow: 3px 6px 8px 4px rgba(0, 0, 0, 0.1);

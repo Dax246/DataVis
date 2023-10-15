@@ -133,7 +133,7 @@
         },
         "color": {
           "field": "Country",
-          "scale": {"range": ["#e60049"]},
+          "scale": {"range": ["#0066CC"]},
           "legend": null
         },
         "tooltip": {
@@ -191,7 +191,7 @@
         },
         "color": {
           "field": "Country",
-          "scale": {"range": ["#0bb4ff"]},
+          "scale": {"range": ["#0066CC"]},
           "legend": null
         },
         "tooltip": {

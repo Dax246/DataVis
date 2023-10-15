@@ -4,9 +4,9 @@
     "url": "https://raw.githubusercontent.com/Dax246/DataVis/main/cost_of_living_final.csv"
   },
   "width": "container",
-  "height": 500,
+  "height": 400,
   "padding":{
-    "bottom": 50
+    "bottom": 30
   },
   "params": [
     {
@@ -50,10 +50,10 @@
         "x": {"field": "Country", "type": "nominal", "axis": {
           "labelAngle": -45
         }},
-        "y": {"field": "AvgMonthlyNetSalary", "type": "quantitative"},
+        "y": {"field": "AvgMonthlyNetSalary", "type": "quantitative", "scale": {"domain":[0,9000]}},
         "color": {
-          "condition": {"test": "datum.Country === 'Australia'", "value": "Green"},
-          "value": "steelblue"
+          "condition": {"test": "datum.Country === 'Australia'", "value": "#00CC33"},
+          "value": "#0066CC"
         },
         "tooltip": [
           {"field": "Country", "type": "nominal"},
@@ -72,7 +72,7 @@
           "labelAngle": -45,
           "title": "Country/Continent"
         }},
-        "y": {"field": "mean_Monthly", "type": "quantitative", "title": "Average Monthly Net Salary"},
+        "y": {"field": "mean_Monthly", "type": "quantitative", "title": "Average Monthly Net Salary" , "scale": {"domain":[0,9000]}},
         "color": {"value": "steelblue"},
         "tooltip": [
           {"field": "Continent", "type": "nominal"},
@@ -91,10 +91,10 @@
           "labelAngle": -45,
           "title": "Country/Continent"
         }},
-        "y": {"field": "AvgMonthlyNetSalary", "type": "quantitative"},
+        "y": {"field": "AvgMonthlyNetSalary", "type": "quantitative" , "scale": {"domain":[0,9000]}},
         "color": {
-          "condition": {"test": "datum.Country === 'Australia'", "value": "Green"},
-          "value": "steelblue"
+          "condition": {"test": "datum.Country === 'Australia'", "value": "#00CC33"},
+          "value": "#0066CC"
         },
         "tooltip": [
           {"field": "Country", "type": "nominal"},
