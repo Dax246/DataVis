@@ -2,9 +2,10 @@
   "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
   "projection": {"type": "equalEarth"},
   "width": "container",
+  "title": "Prices Across the Globe",
   "height": 500,
   "data": {
-    "url": "Global_map.topojson",
+    "url": "Global_map_final.topojson",
     "format": {"type": "topojson", "feature": "ne_110m_admin_0_countries"}
   }, 
   "params": [
@@ -12,7 +13,10 @@
       "name": "selectedProduct",
       "bind": {
         "input": "select",
-        "options": ["Milk", "Bread", "Eggs", "McMeal", "Taxi1km", "Cinema", "Apt1BedroomCityCtr", "AvgMonthlyNetSalary"],
+        "options": ["Milk", "Bread", "Eggs","Chicken", "Apples", "McMeal", "BeerDomesticMarket", "Wine", "Jeans", "Gasoline", 
+        "CarToyotaCorolla", "Taxi1km", "MonthlyPass", "Cinema", "FitnessClub", "PrimarySchool", "InternetAndMobile", "PricePerSqMtCityCtr", "Apt1BedroomNoCityCtr", "Apt3BedroomNoCityCtr", "MortgageInterest"],
+        "labels": ["Milk", "Bread", "Eggs","Chicken", "Apples", "McMeal", "Price of Domestic Beer", "Wine", "Jeans", "Petrol", 
+        "Toyota Corolla", "1Km Taxi Ride", "Monthly Public Transport Pass", "Cinema", "Fitness Club", "Primary School", "Internet and Mobile", "Price per Square Metre in the City", "1 Bedroom Apartment Outside the City", "3 Bedroom Apartment Outside the City", "Mortgage Interest"],
         "name": "Select Product "
       },
       "value": "Milk"
@@ -20,24 +24,33 @@
   ],
   "transform": [
     {
-      "fold": ["Milk", "Bread", "Eggs", "McMeal", "Taxi1km", "Cinema", "Apt1BedroomCityCtr", "AvgMonthlyNetSalary"],
+      "fold": ["Milk", "Bread", "Eggs","Chicken", "Apples", "McMeal", "BeerDomesticMarket", "Wine", "Jeans", "Gasoline", 
+      "CarToyotaCorolla", "Taxi1km", "MonthlyPass", "Cinema", "FitnessClub", "PrimarySchool", "InternetAndMobile", "PricePerSqMtCityCtr", "Apt1BedroomNoCityCtr", "Apt3BedroomNoCityCtr", "MortgageInterest"],
       "as": ["Product", "Value"]
     },
     {
       "filter": "datum.Product == selectedProduct"
+    },
+    {
+      "calculate": "selectedProduct == 'MortgageInterest' ? 'Percentage' : 'Cost of Selected Product'",
+      "as": "dynamicTitle"
+    },
+    {
+      "calculate": "selectedProduct == 'MortgageInterest' ? 'Percentage' : 'Cost'",
+      "as": "dynamicTooltipTitle"
     }
   ],
   "layer":[
     {
       "data": {
-        "url": "Global_map_with_boundary_box.topojson",
+        "url": "Global_map_final.topojson",
         "format": {"type": "topojson", "feature": "ne_110m_wgs84_bounding_box"}
       },
       "mark": {"type": "geoshape", "fill": "lightsteelblue", "stroke": "blue"}
     },
     {
       "data": {
-        "url": "Global_map_with_boundary_box.topojson",
+        "url": "Global_map_final.topojson",
         "format": {"type": "topojson", "feature": "ne_110m_graticules_30"}
       },
       "mark": {"type": "geoshape", "fill": null, "stroke": "lightgray"}
@@ -52,36 +65,97 @@
       "mark": {"type": "geoshape", "fill": "lightgray", "stroke": "white"},
       "encoding": {"tooltip": {"field": "note"}}
     },
-  {
-  "transform": [
     {
-      "lookup": "properties.NAME",
-      "from": {
-        "data": {
-          "url": "https://raw.githubusercontent.com/Dax246/DataVis/main/cost_of_living_final.csv"
+      "transform": [
+        {
+          "lookup": "properties.NAME",
+          "from": {
+            "data": {
+              "url": "https://raw.githubusercontent.com/Dax246/DataVis/main/cost_of_living_final.csv"
+            },
+            "key": "Country",
+            "fields": ["Milk", "Bread", "Eggs","Chicken", "Apples", "McMeal", "BeerDomesticMarket", "Wine", "Jeans", "Gasoline", 
+            "CarToyotaCorolla", "Taxi1km", "MonthlyPass", "Cinema", "FitnessClub", "PrimarySchool", "InternetAndMobile", "PricePerSqMtCityCtr", "Apt1BedroomNoCityCtr", "Apt3BedroomNoCityCtr", "MortgageInterest"]
+          }
         },
-        "key": "Country",
-        "fields": ["Milk", "Bread", "Eggs", "McMeal", "Taxi1km", "Cinema", "Apt1BedroomCityCtr", "AvgMonthlyNetSalary"]
+        {
+          "filter": "selectedProduct !== 'MortgageInterest'"
+        },
+        {
+          "calculate": "datum[selectedProduct]",
+          "as": "chosenProductValue"
+        },
+        {
+          "filter": "datum[selectedProduct] !== null && datum[selectedProduct] > 0"
+        }
+      ],
+      "mark": {"type": "geoshape"},
+      "encoding": {
+        "color": {
+          "field": "chosenProductValue",
+          "type": "quantitative",
+          "scale": {"type": "linear"},
+          "title": "Value",
+          "legend": {
+            "orient": "bottom-left"
+          }
+        },
+        "tooltip": [
+          {"field": "properties.NAME", "type": "nominal", "title": "Country"},
+          {"field": "chosenProductValue", "type": "quantitative", "title": "Cost", "format": ".2f"}
+        ]
       }
     },
     {
-      "calculate": "datum[selectedProduct]",
-      "as": "chosenProductValue"
-    }
-    ],
-  "mark": {"type": "geoshape"},
-  "encoding": {
-    "color": {
-      "field": "chosenProductValue",
-      "type": "quantitative",
-      "scale": {"type": "linear"},
-      "title": "Value of Selected Product"
+      "data": {
+        "url": "Global_map_final.topojson",
+        "format": {"type": "topojson", "feature": "ne_110m_admin_0_boundary_lines_land"}
+      },
+      "mark": {"type": "geoshape", "fill": null, "stroke": "lightgrey"}
     },
-    "tooltip": [
-      {"field": "properties.NAME", "type": "nominal", "title": "Country"},
-      {"field": "chosenProductValue", "type": "quantitative", "title": "Value", "format": ".2f"}
-    ]
-  }
-}
-]
+    {
+      "transform": [
+        {
+          "lookup": "properties.NAME",
+          "from": {
+            "data": {
+              "url": "https://raw.githubusercontent.com/Dax246/DataVis/main/cost_of_living_final.csv"
+            },
+            "key": "Country",
+            "fields": ["Milk", "Bread", "Eggs","Chicken", "Apples", "McMeal", "BeerDomesticMarket", "Wine", "Jeans", "Gasoline", 
+            "CarToyotaCorolla", "Taxi1km", "MonthlyPass", "Cinema", "FitnessClub", "PrimarySchool", "InternetAndMobile", "PricePerSqMtCityCtr", "Apt1BedroomNoCityCtr", "Apt3BedroomNoCityCtr", "MortgageInterest"]
+          }
+        },
+        {
+          "filter": "selectedProduct === 'MortgageInterest'"
+        },
+        {
+          "calculate": "datum[selectedProduct]",
+          "as": "chosenProductValue"
+        },
+        {
+          "filter": "datum[selectedProduct] !== null && datum[selectedProduct] > 0"
+        }
+      ],
+      "mark": {"type": "geoshape"},
+      "encoding": {
+        "color": {
+          "field": "chosenProductValue",
+          "type": "quantitative",
+          "scale": {"type": "linear"}
+        },
+        "tooltip": [
+          {"field": "properties.NAME", "type": "nominal", "title": "Country"},
+          {"field": "chosenProductValue", "type": "quantitative", "title": "Percentage", "format": ".2f"}
+        ]
+      }
+    },
+    {
+      "data": {
+        "url": "Global_map_final.topojson",
+        "format": {"type": "topojson", "feature": "ne_110m_admin_0_boundary_lines_land"}
+      },
+      "mark": {"type": "geoshape", "fill": null, "stroke": "lightgrey"}
+    }
+  ]
 }

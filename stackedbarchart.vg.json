@@ -8,22 +8,26 @@
     "transform": [
         {
             "calculate": "datum.Wine * 2",
-            "as": "Wine2People"
+            "as": "Wine for 2"
         },
         {
             "calculate": "datum.Cinema * 2",
-            "as": "Cinema2People"
+            "as": "Cinema for 2"
         },
         {
             "calculate": "datum.Taxi1km * 10",
-            "as": "TaxiTrip"
+            "as": "Taxi Trip"
+        },
+        {
+          "calculate": "datum.Meal2People",
+          "as": "Meal for 2"
         },
       {
-        "fold": ["TaxiTrip", "Wine2People", "Meal2People", "Cinema2People", "Jeans"],
+        "fold": ["Taxi Trip", "Wine for 2", "Meal for 2", "Cinema for 2", "Jeans"],
         "as": ["Product", "Value"]
       },
       {
-        "filter": "datum.Country === 'Australia' || datum.Country === 'France' || datum.Country === 'New Zealand' || datum.Country === 'United States of America' || datum.Country === 'United Kingdom'"
+        "filter": "datum.Country === 'Austria' || datum.Country === 'Hungary' || datum.Country === 'Poland' || datum.Country === 'Belgium' || datum.Country === 'Iceland' || datum.Country === 'Portugal' || datum.Country === 'Czech Republic' || datum.Country === 'Ireland' || datum.Country === 'Slovakia' || datum.Country === 'Denmark' || datum.Country === 'Italy' || datum.Country === 'Slovenia' || datum.Country === 'Estonia' || datum.Country === 'Latvia' || datum.Country === 'Spain' || datum.Country === 'Finland' || datum.Country === 'Lithuania' || datum.Country === 'Sweden' || datum.Country === 'France' || datum.Country === 'Luxembourg' || datum.Country === 'Switzerland' || datum.Country === 'Germany' || datum.Country === 'Netherlands' || datum.Country === 'United Kingdom' || datum.Country === 'Greece' || datum.Country === 'Norway' || datum.Country === 'Canada' || datum.Country === 'Chile' || datum.Country === 'United States of America' || datum.Country === 'Israel' || datum.Country === 'Japan' || datum.Country === 'South Korea' || datum.Country === 'China' || datum.Country === 'Australia' || datum.Country === 'New Zealand'" 
       }
     ],
     "mark": "bar",
@@ -43,7 +47,10 @@
       "color": {
         "field": "Product",
         "type": "nominal",
-        "title": "Product"
+        "title": "Product",
+        "legend": {
+          "orient": "top-left"
+        }
       },
       "tooltip": [
         {"field": "Country", "type": "nominal"},

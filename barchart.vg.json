@@ -4,7 +4,10 @@
     "url": "https://raw.githubusercontent.com/Dax246/DataVis/main/cost_of_living_final.csv"
   },
   "width": "container",
-  "height": 400,
+  "height": 500,
+  "padding":{
+    "bottom": 50
+  },
   "params": [
     {
       "name": "Continent_selection",
@@ -17,59 +20,85 @@
           "Europe",
           "Africa",
           "Asia",
-          "Oceania"
+          "Oceania",
+          "Developed Nations"
         ],
         "labels": [
-          "Show All",
+          "Average per Continent",
           "North America",
           "South America",
           "Europe",
           "Africa",
           "Asia",
-          "Oceania"
+          "Oceania",
+          "Developed Nations"
         ],
-        "name": "Continent Selection "
+        "name": " "
       },
-      "value": null
+      "value": "Developed Nations"
     }
   ],
   "layer": [
     {
       "transform": [
-        {"filter": "datum.McMeal > 0 && Continent_selection !== null"},
-        {"filter": "datum.Continent == Continent_selection"}
+        {"filter": "datum.AvgMonthlyNetSalary !== null"},
+        {"filter": "datum.AvgMonthlyNetSalary > 0 && Continent_selection !== null"},
+        {"filter": "datum.Continent == Continent_selection && datum.AvgMonthlyNetSalary !== null"}
       ],
       "mark": "bar",
       "encoding": {
         "x": {"field": "Country", "type": "nominal", "axis": {
           "labelAngle": -45
         }},
-        "y": {"field": "McMeal", "type": "quantitative", "title": "Cost"},
+        "y": {"field": "AvgMonthlyNetSalary", "type": "quantitative"},
         "color": {
           "condition": {"test": "datum.Country === 'Australia'", "value": "Green"},
           "value": "steelblue"
         },
         "tooltip": [
           {"field": "Country", "type": "nominal"},
-          {"field": "McMeal", "type": "quantitative", "title": "Price of McMeal", "format": ".2f"}
+          {"field": "AvgMonthlyNetSalary", "type": "quantitative", "title": "Average Monthly Net Salary", "format": ".2f"}
         ]
       }
     },
     {
       "transform": [
-        {"filter": "datum.McMeal > 0 && Continent_selection === null"},
-        {"aggregate": [{"op": "mean", "field": "McMeal", "as": "mean_McMeal"}], "groupby": ["Continent"]}
+        {"filter": "datum.AvgMonthlyNetSalary > 0 && Continent_selection === null"},
+        {"aggregate": [{"op": "mean", "field": "AvgMonthlyNetSalary", "as": "mean_Monthly"}], "groupby": ["Continent"]}
       ],
       "mark": "bar",
       "encoding": {
         "x": {"field": "Continent", "type": "nominal", "axis": {
-          "labelAngle": -45
+          "labelAngle": -45,
+          "title": "Country/Continent"
         }},
-        "y": {"field": "mean_McMeal", "type": "quantitative", "title": "Average Cost"},
+        "y": {"field": "mean_Monthly", "type": "quantitative", "title": "Average Monthly Net Salary"},
         "color": {"value": "steelblue"},
         "tooltip": [
           {"field": "Continent", "type": "nominal"},
-          {"field": "mean_McMeal", "type": "quantitative", "title": "Average Price of McMeal", "format": ".2f"}
+          {"field": "mean_Monthly", "type": "quantitative", "title": "Average Monthly Net Salary", "format": ".2f"}
+        ]
+      }
+    },
+    {
+      "transform": [
+        {"filter": "Continent_selection === 'Developed Nations'"},
+        {"filter": "datum.Country === 'Austria' || datum.Country === 'Hungary' || datum.Country === 'Poland' || datum.Country === 'Belgium' || datum.Country === 'Iceland' || datum.Country === 'Portugal' || datum.Country === 'Czech Republic' || datum.Country === 'Ireland' || datum.Country === 'Slovakia' || datum.Country === 'Denmark' || datum.Country === 'Italy' || datum.Country === 'Slovenia' || datum.Country === 'Estonia' || datum.Country === 'Latvia' || datum.Country === 'Spain' || datum.Country === 'Finland' || datum.Country === 'Lithuania' || datum.Country === 'Sweden' || datum.Country === 'France' || datum.Country === 'Luxembourg' || datum.Country === 'Switzerland' || datum.Country === 'Germany' || datum.Country === 'Netherlands' || datum.Country === 'United Kingdom' || datum.Country === 'Greece' || datum.Country === 'Norway' || datum.Country === 'Canada' || datum.Country === 'Chile' || datum.Country === 'United States of America' || datum.Country === 'Israel' || datum.Country === 'Japan' || datum.Country === 'South Korea' || datum.Country === 'China' || datum.Country === 'Australia' || datum.Country === 'New Zealand'" }
+      ],
+      "mark": "bar",
+      "encoding": {
+        "x": {"field": "Country", "type": "nominal", "axis": {
+          "labelAngle": -45,
+          "title": "Country/Continent"
+        }},
+        "y": {"field": "AvgMonthlyNetSalary", "type": "quantitative"},
+        "color": {
+          "condition": {"test": "datum.Country === 'Australia'", "value": "Green"},
+          "value": "steelblue"
+        },
+        "tooltip": [
+          {"field": "Country", "type": "nominal"},
+          {"field": "AvgMonthlyNetSalary", "type": "quantitative", "title": "Average Monthly Net Salary", "format": ".2f"}
         ]
       }
     }

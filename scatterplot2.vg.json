@@ -11,10 +11,10 @@
       "as": "HighlightGroup"
     },
     {
-      "calculate": "datum.Apt1BedroomCityCtr / datum.AvgMonthlyNetSalary",
-      "as": "PricePerSalaryCity"
+      "calculate": "datum.Apt3BedroomNoCityCtr / datum.AvgMonthlyNetSalary",
+      "as": "PricePerSalary"
     },
-    {"filter": "datum.PricePerSalaryCity > 0 && datum.PricePerSalaryCity < 2"},
+    {"filter": "datum.PricePerSalary > 0 && datum.PricePerSalary < 3"},
     {"filter": "datum.MortgageInterest > 0 && datum.MortgageInterest < 15"}
   ],
   "params": [
@@ -29,9 +29,9 @@
       "mark": "point",
       "encoding": {
         "x": {
-          "field": "PricePerSalaryCity",
+          "field": "PricePerSalary",
           "type": "quantitative",
-          "title": "Rent for 1 Bedroom Apartment in the City per Average Net Monthly Salary",
+          "title": "Rent for 3 Bedroom Apartment Outside the City per Average Net Monthly Salary",
           "axis": {"tickCount": 7},
           "scale": {"type": "linear"}
         },
@@ -56,8 +56,7 @@
           "legend": {
             "title": "Highlight Selector",
             "titleFontSize": 10,
-            "labelFontSize": 8,
-            "orient": "left"
+            "labelFontSize": 8
           }
         },
         "fill": {
@@ -72,7 +71,7 @@
         "size": {"value": 40},
         "tooltip": [
           {"field": "Country", "type": "nominal"},
-          {"field": "PricePerSalaryCity", "type": "quantitative", "title": "Rent for 1 Bedroom Apt in the City / Monthly Salary", "format": ".2f"},
+          {"field": "PricePerSalary", "type": "quantitative", "title": "Rent for 3 Bedroom Apt Outside the City / Monthly Salary", "format": ".2f"},
           {"field": "MortgageInterest", "type": "quantitative", "format": ".2f"}
         ]
       }

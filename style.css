@@ -3,7 +3,20 @@ body *{
 }
 
 h1 {
-    font-weight: 900;
+    font-family: 'Raleway', sans-serif;
+    font-weight: 800;
+    font-size: xx-large;
+}
+
+h2 {
+    font-family: 'Raleway', sans-serif;
+    font-weight: 700;
+    font-size: x-large;
+}
+
+p {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 300;
 }
 
 body {
@@ -28,12 +41,21 @@ body {
 .vis-container {
     width: 100%;
     height: 100%;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 300;
+}
+
+.heading_style {
+    background-color: rgba(17, 70, 214, 0.329); 
+    border-radius: 15px;         
+    padding: 50px;               
+    box-shadow: 3px 6px 8px 4px rgba(0, 0, 0, 0.1);
 }
 
 .main_style {
-    background-color: white; /* Set background to light grey */
-    border-radius: 15px;         /* Rounded corners */
-    padding: 50px;               /* Padding inside the div */
+    background-color: white; 
+    border-radius: 15px;         
+    padding: 50px;               
     box-shadow: 3px 6px 8px 4px rgba(0, 0, 0, 0.1);
 }
 

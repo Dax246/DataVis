@@ -1,33 +1,205 @@
 {
-    "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
-    "data": {
-        "url": "https://raw.githubusercontent.com/Dax246/DataVis/main/cost_of_living_final.csv"
-      },
-    "transform": [
-    {"filter": "datum.Country === 'Australia'"},
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "data": {
+    "url": "https://raw.githubusercontent.com/Dax246/DataVis/main/cost_of_living_final.csv"
+  },
+  "params": [
     {
-        "calculate": "datum.Attribute === 'Bread' || datum.Attribute === 'Eggs' || datum.Attribute === 'Milk' ? datum.Attribute: 'Other'", 
-        "as": "display_categories"
+      "name": "country_selected",
+      "bind":{
+        "input": "select",
+        "options": [
+          "Austria",
+          "Hungary",
+          "Poland",
+          "Belgium",
+          "Iceland",
+          "Portugal",
+          "Ireland",
+          "Slovakia",
+          "Denmark",
+          "Italy",
+          "Slovenia",
+          "Estonia",
+          "Latvia",
+          "Spain",
+          "Finland",
+          "Lithuania",
+          "Sweden",
+          "France",
+          "Luxembourg",
+          "Switzerland",
+          "Germany",
+          "Netherlands",
+          "United Kingdom",
+          "Greece",
+          "Norway",
+          "Canada",
+          "Chile",
+          "United States of America",
+          "Israel",
+          "Japan",
+          "South Korea",
+          "China",
+          "New Zealand"
+        ],
+        "labels": [
+          "Austria",
+          "Hungary",
+          "Poland",
+          "Belgium",
+          "Iceland",
+          "Portugal",
+          "Ireland",
+          "Slovakia",
+          "Denmark",
+          "Italy",
+          "Slovenia",
+          "Estonia",
+          "Latvia",
+          "Spain",
+          "Finland",
+          "Lithuania",
+          "Sweden",
+          "France",
+          "Luxembourg",
+          "Switzerland",
+          "Germany",
+          "Netherlands",
+          "United Kingdom",
+          "Greece",
+          "Norway",
+          "Canada",
+          "Chile",
+          "United States of America",
+          "Israel",
+          "Japan",
+          "South Korea",
+          "China",
+          "New Zealand"
+        ],
+        "name": "Pick a Country "
+      },
+      "value": "France"
     }
-    ],
-    "vconcat": [
-      {
-        "mark": "bar",
-        "encoding": {
-          "x": {
-            "field": "Milk",
-            "type": "quantitative",
-            "title": "Milk",
-            "axis": {"orient": "bottom", "labels": false, "ticks": false}
-          },
-          "y": {"field": "Country", "type": "ordinal", "title": null},
-          "color": {"value": "blue"}
+  ],
+  
+  "transform": [
+    {
+      "fold": ["Milk","Chicken", "Apples", "McMeal", "BeerDomesticMarket", "Apples", "Taxi1km", "TennisCourtRent", "Cinema", "MortgageInterest", "Wine", "Water", "Cheese"],
+      "as": ["Good", "Price"]
+    },
+    {
+      "calculate": "datum.Good === 'Taxi1km' ? 'Taxi 1Km Trip' : datum.Good",
+      "as": "Good"
+    },
+    {
+      "calculate": "datum.Good === 'MortgageInterest' ? 'Mortgage Interest Rate' : datum.Good",
+      "as": "Good"
+    },
+    {
+      "calculate": "datum.Good === 'BeerDomesticMarket' ? 'Domestic Beer' : datum.Good",
+      "as": "Good"
+    },
+    {
+      "calculate": "datum.Good === 'TennisCourtRent' ? 'Tennis Court Rent' : datum.Good",
+      "as": "Good"
+    }    
+  ],
+  "hconcat": [
+    {
+      "width": 340,
+      "transform": [
+        {
+          "filter": "datum.Country === 'Australia'"
+        }
+      ],
+      "mark": "bar",
+      "encoding": {
+        "y": {
+          "field": "Good",
+          "type": "nominal",
+          "sort": "descending",
+          "axis": null
+        },
+        "x": {
+          "field": "Price",
+          "type": "quantitative",
+          "axis": {"title": "Australia ($)", "format": "s"},
+          "sort": "descending",
+          "scale": {
+            "domain": [0, 20]
+          }
+        },
+        "color": {
+          "field": "Country",
+          "scale": {"range": ["#e60049"]},
+          "legend": null
+        },
+        "tooltip": {
+          "field": "Price",
+          "type": "quantitative",
+          "format": ".2f"
         }
       }
-    ],
-    "config": {
+    },
+    {
+      
+      "width": 50,
       "view": {"stroke": null},
-      "axis": {"grid": false}
+      "mark": {
+        "type": "text",
+        "align": "center",
+        "fontSize": 17,
+        "fontWeight": 100
+      },
+      "encoding": {
+        "y": {
+          "field": "Good",
+          "type": "nominal",
+          "sort": "descending",
+          "axis": null
+        },
+        "text": {
+          "field": "Good",
+          "type": "nominal"
+        }
+      }
+    },
+    {
+      "width": 340,
+      "transform": [
+        {
+          "filter": "datum.Country === country_selected"
+        }
+      ],
+      "mark": "bar",
+      "encoding": {
+        "y": {
+          "field": "Good",
+          "type": "nominal",
+          "axis": null,
+          "sort": "descending"
+        },
+        "x": {
+          "field": "Price",
+          "type": "quantitative",
+          "axis": {"title": "Selected Country ($)", "format": "s"},
+          "scale": {
+            "domain": [0, 20]
+          }
+        },
+        "color": {
+          "field": "Country",
+          "scale": {"range": ["#0bb4ff"]},
+          "legend": null
+        },
+        "tooltip": {
+          "field": "Price",
+          "type": "quantitative",
+          "format": ".2f"
+        }
+      }
     }
-  }
-  
+  ]
+}
